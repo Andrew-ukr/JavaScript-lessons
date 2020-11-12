@@ -25,6 +25,10 @@ body {
   background-color: rgb(95, 26, 26);
 
 }
+.btn-list button.new {
+background-color: rgb(132, 133, 180);
+
+}
 
 .btn-list {
   background-color: cornflowerblue;

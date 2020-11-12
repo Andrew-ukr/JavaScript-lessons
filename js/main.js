@@ -18,4 +18,7 @@ btn.addEventListener('click', (e) => {
   } 
 });
 
+let newBtn = document.createElement('button');
+newBtn.classList.add('new');
+btn.append(newBtn);
 
