@@ -33,6 +33,7 @@ body {
   width: 100px;
   height: 50px;
   background-color: chocolate;
+  cursor: pointer;
 }
 
 .btn-list button.active {

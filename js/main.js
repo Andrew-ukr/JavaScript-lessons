@@ -3,18 +3,18 @@
 
 let menuBtn1 = document.querySelectorAll('[class="item-link"]');
 
+menuBtn1.forEach(element => {
+  element.addEventListener('click', () => {
+    element.classList.toggle('active');
+  });
+});
 
-// menuBtn1.forEach(element => {
-//   element.addEventListener('click', () => {
-//     element.classList.toggle('active');
-//   });
-// });
-
-let btn = document.querySelectorAll('.btn-list');
+let btn = document.querySelector('.btn-list');
 
 btn.addEventListener('click', (e) => {
-  if (e.target && e.target.tagName == 'BUTTON') {
-    console.log('aaaaaaa');
+  if (e.target && e.target.tagName === 'BUTTON') {
+    e.target.classList.toggle('active');
+    document.body.classList.toggle('as');
   } 
 });
 
