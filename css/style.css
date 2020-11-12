@@ -2,3 +2,39 @@ body {
   background-color: grey;
   color: aliceblue;
 }
+
+
+.item-list {
+  width: 100%;
+  background-color: bisque;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 50px;
+}
+.item-link {
+  display: block;
+  width: 100px;
+  height: 50px;
+  background-color: brown;
+}
+.item-link.active {
+  background-color: rgb(95, 26, 26);
+
+}
+
+.btn-list {
+  background-color: cornflowerblue;
+}
+.btn-list button {
+  width: 100px;
+  height: 50px;
+  background-color: chocolate;
+}
+
+.btn-list button.active {
+background-color: rgb(180, 145, 132);
+}
