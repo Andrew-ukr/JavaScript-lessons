@@ -47,16 +47,17 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // timer
 
-  let dedline = '2020-12-31';
+  let dedline = '2020-11-16';
 
   let timerBlock = document.querySelector('.timer');
   let days = timerBlock.querySelector('#days');
   let hours = timerBlock.querySelector('#hours');
   let minutes = timerBlock.querySelector('#minutes');
   let seconds = timerBlock.querySelector('#seconds');
+  let refresh;
 
   function getTimeLeft(dedline) {
-    let leftTimeMS = Date.parse(dedline) - Date.parse(new Date());
+    let leftTimeMS = (Date.parse(dedline) - 7200000) - Date.parse(new Date()); // 7200000 це 2 години .
 
     let daysNum = Math.floor(leftTimeMS / (1000 * 60 * 60 * 24));
     let hoursNum = Math.floor((leftTimeMS / (1000 * 60 * 60)) % 24);
@@ -82,7 +83,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   function setInt() {
     setInterval(() => {
-      let refresh = getTimeLeft(dedline);
+      refresh = getTimeLeft(dedline);
     }, 1000);
   }
   getTimeLeft(dedline);
@@ -94,27 +95,45 @@ window.addEventListener('DOMContentLoaded', () => {
 
   let modalBtn = document.querySelectorAll('[data-modal]');
   let modalWindow = document.querySelector('.modal');
+  let modalInterval = setTimeout(addClassShow, 10000);
 
 
-  function addShowClass() {
+  function addClassShow() {
     modalWindow.classList.toggle('show');
     document.body.style.overflow = "hidden";
+    clearInterval(modalInterval);
   }
 
   modalBtn.forEach(element => {
-    element.addEventListener('click', addShowClass);
+    element.addEventListener('click', addClassShow);
   });
 
   modalWindow.addEventListener('click', (e) => {
-    if (e.target && e.target.classList.contains('modal__close') || e.target.classList.contains('modal')) {
-      addShowClass();
-    document.body.style.overflow = "";
+    if ((e.target && e.target.classList.contains('modal__close')) || (e.target && e.target === modalWindow)) {
+      addClassShow();
+      document.body.style.overflow = "";
+    }
+  });
 
-    } 
+  document.addEventListener('keydown', (e) => {
+    if (e.code === 'Escape' && modalWindow.classList.contains('show')) {
+      addClassShow();
+      document.body.style.overflow = "";
+    }
+  });
+
+  let counterScrollDown = 0;
+
+  document.addEventListener('scroll', () => {
+
+    if ((document.documentElement.scrollHeight - document.documentElement.scrollTop - document.documentElement.clientHeight <= 100 ) && counterScrollDown === 0) {
+      addClassShow();
+      clearInterval(modalInterval);
+      counterScrollDown++;
+    }
   });
 
   // modal
-
 
 
 
