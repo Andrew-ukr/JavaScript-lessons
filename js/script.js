@@ -93,14 +93,14 @@ window.addEventListener('DOMContentLoaded', () => {
 
   let modalBtn = document.querySelectorAll('[data-modal]');
   let modalWindow = document.querySelector('.modal');
-  // let modalInterval = setTimeout(addClassShow, 5000);
+  let modalInterval = setTimeout(addClassShow, 5000);
   let scrollWidth;
 
   function addClassShow() {
     modalWindow.classList.toggle('show');
     document.body.style.overflow = "hidden";
     document.body.style.marginRight = `${scrollWidth}px`;
-    // clearInterval(modalInterval);
+    clearInterval(modalInterval);
     document.removeEventListener('scroll', scrollListener);
   }
 
@@ -212,22 +212,6 @@ window.addEventListener('DOMContentLoaded', () => {
     'small'
 
     ).createCard();
-
-
-
-
-
-
-
-
-
-
-
-
   // add menu card
-
-
-
-
   //_____________________________________________________
 });
