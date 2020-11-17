@@ -93,14 +93,14 @@ window.addEventListener('DOMContentLoaded', () => {
 
   let modalBtn = document.querySelectorAll('[data-modal]');
   let modalWindow = document.querySelector('.modal');
-  let modalInterval = setTimeout(addClassShow, 5000);
+  // let modalInterval = setTimeout(addClassShow, 5000);
   let scrollWidth;
 
   function addClassShow() {
     modalWindow.classList.toggle('show');
     document.body.style.overflow = "hidden";
     document.body.style.marginRight = `${scrollWidth}px`;
-    clearInterval(modalInterval);
+    // clearInterval(modalInterval);
     document.removeEventListener('scroll', scrollListener);
   }
 
@@ -113,7 +113,6 @@ window.addEventListener('DOMContentLoaded', () => {
       addClassShow();
       document.body.style.overflow = "";
       document.body.style.marginRight = `${0}px`;
-
     }
   });
 
@@ -150,11 +149,82 @@ window.addEventListener('DOMContentLoaded', () => {
   modalMR();
   // modal
 
+  // add menu card
+
+  class MenuCard {
+    constructor(src, alt, title, textContent, price, cardPlace, ...additionalClasses) {
+      this.src = src;
+      this.alt = alt;
+      this.title = title;
+      this.textContent = textContent;
+      this.price = Math.floor(price / 1.17);
+      this.cardPlace = document.querySelector(cardPlace);
+      this.additionalClasses = additionalClasses;
+
+    }
+
+    createCard() {
+      let cardDiv = document.createElement('div');
+      cardDiv.classList.add('menu__item');
+      this.additionalClasses.forEach(element => {
+        cardDiv.classList.add(element);
+      });
+      cardDiv.innerHTML = `
+        <img src=${this.src} alt=${this.alt}>
+        <h3 class="menu__item-subtitle">${this.title}</h3>
+        <div class="menu__item-descr">${this.textContent}</div>
+        <div class="menu__item-divider"></div>
+        <div class="menu__item-price">
+            <div class="menu__item-cost">Цена:</div>
+            <div class="menu__item-total"><span>${this.price}</span> грн/день</div>
+        </div>`;
+      this.cardPlace.append(cardDiv);
+    }
+  }
+
+  new MenuCard(
+    "img/slider/food-12.jpg",
+    'Lorem ipsum dolor sit amet',
+    'Lorem ipsum dolor sit amet',
+    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos consequuntur exercitationem consectetur tenetur! Ea sit provident necessitatibus aliquam cumque consequatur corporis excepturi dolorem iste! Numquam, non dolor. Quis, laudantium eaque! Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos consequuntur exercitationem consectetur tenetur! Ea sit provident necessitatibus aliquam cumque consequatur corporis excepturi dolorem iste! Numquam, non dolor. Quis, laudantium eaque!",
+    "555",
+    ".menu__field .container",
+    "big",
+    'small'
+    ).createCard();
+
+  new MenuCard(
+    "img/slider/olive-oil.jpg",
+    'Lorem ipsum dolor sit amet',
+    'Lorem ipsum dolor sit amet',
+    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos consequuntur exercitationem consectetur tenetur! Ea sit provident necessitatibus aliquam cumque consequatur corporis excepturi dolorem iste! Numquam, non dolor. Quis, laudantium eaque! Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos consequuntur exercitationem consectetur tenetur! Ea sit provident necessitatibus aliquam cumque consequatur corporis excepturi dolorem iste! Numquam, non dolor. Quis, laudantium eaque!",
+    "44882",
+    "[data-container]"
+    ).createCard();
+
+  new MenuCard(
+    "img/tabs/hamburger.jpg",
+    'Lorem ipsum dolor sit amet',
+    'Lorem ipsum dolor sit amet',
+    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos consequuntur exercitationem consectetur tenetur! Ea sit provident necessitatibus aliquam cumque consequatur corporis excepturi dolorem iste! Numquam, non dolor. Quis, laudantium eaque! Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos consequuntur exercitationem consectetur tenetur! Ea sit provident necessitatibus aliquam cumque consequatur corporis excepturi dolorem iste! Numquam, non dolor. Quis, laudantium eaque!",
+    "45",
+    "[data-container]",
+    'small'
+
+    ).createCard();
 
 
 
 
 
+
+
+
+
+
+
+
+  // add menu card
 
 
 
