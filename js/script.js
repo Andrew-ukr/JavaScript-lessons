@@ -112,7 +112,7 @@ window.addEventListener('DOMContentLoaded', () => {
     if ((e.target && e.target.classList.contains('modal__close')) || (e.target && e.target === modalWindow)) {
       addClassShow();
       document.body.style.overflow = "";
-      document.body.style.marginRight = `${0}px`;
+      document.body.style.marginRight = ``;
     }
   });
 
@@ -120,7 +120,7 @@ window.addEventListener('DOMContentLoaded', () => {
     if (e.code === 'Escape' && modalWindow.classList.contains('show')) {
       addClassShow();
       document.body.style.overflow = "";
-      document.body.style.marginRight = `${0}px`;
+      document.body.style.marginRight = ``;
     }
   });
 
