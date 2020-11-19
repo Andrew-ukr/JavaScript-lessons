@@ -191,7 +191,7 @@ window.addEventListener('DOMContentLoaded', () => {
     ".menu__field .container",
     "big",
     'small'
-    ).createCard();
+  ).createCard();
 
   new MenuCard(
     "img/slider/olive-oil.jpg",
@@ -200,7 +200,7 @@ window.addEventListener('DOMContentLoaded', () => {
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos consequuntur exercitationem consectetur tenetur! Ea sit provident necessitatibus aliquam cumque consequatur corporis excepturi dolorem iste! Numquam, non dolor. Quis, laudantium eaque! Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos consequuntur exercitationem consectetur tenetur! Ea sit provident necessitatibus aliquam cumque consequatur corporis excepturi dolorem iste! Numquam, non dolor. Quis, laudantium eaque!",
     "44882",
     "[data-container]"
-    ).createCard();
+  ).createCard();
 
   new MenuCard(
     "img/tabs/hamburger.jpg",
@@ -211,7 +211,68 @@ window.addEventListener('DOMContentLoaded', () => {
     "[data-container]",
     'small'
 
-    ).createCard();
+  ).createCard();
   // add menu card
+
+  // form
+  
+  let form = document.querySelectorAll('form');
+  form.forEach(item => {
+    formAction(item);
+  });
+
+  function formAction(form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+
+      const object = {};
+      formData.forEach(function (value, key) {
+        object[key] = value;
+      });
+
+      fetch('./server.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(object)
+      }).then((data) => data.text)
+      .then((data) => {
+        console.log(data);
+        createMassageBlock(form, massage.successfully);
+      }).catch(() => {
+        createMassageBlock(form, massage.fail);
+      }).finally(() => {
+        form.reset();
+      });
+    });
+  }
+  let massage = {
+    sending: ``,
+    successfully: 'Ваш запит прийнято. Найближчим часом з вами звяжуться наші менеджери :)',
+    fail: 'Невдача. Спробуйте пізніше :('
+  };
+
+  function createMassageBlock(form, status) {
+    let massageBlock = document.createElement('div');
+    massageBlock.style.cssText = `
+    text-align: center;
+    margin-top: 30px;
+    padding: 20px 10px;
+    font-size: 24px;
+    height: 100%;
+    background-color: rgba(0, 128, 0, 0.25);
+    `;
+    form.append(massageBlock);
+    massageBlock.textContent = status;
+    setTimeout(() => {
+      massageBlock.remove();
+    }, 5000);
+  }
+
+  // form
+
   //_____________________________________________________
 });
