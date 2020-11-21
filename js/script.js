@@ -47,7 +47,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // timer
 
-  let dedline = '2020-11-17';
+  let dedline = '2021-11-17';
 
   let timerBlock = document.querySelector('.timer');
   let days = timerBlock.querySelector('#days');
@@ -94,6 +94,7 @@ window.addEventListener('DOMContentLoaded', () => {
   let modalBtn = document.querySelectorAll('[data-modal]');
   let modalWindow = document.querySelector('.modal');
   let modalInterval = setTimeout(addClassShow, 5000);
+  let closeBTN = document.querySelector('.modal__close');
   let scrollWidth;
 
   function addClassShow() {
@@ -109,7 +110,7 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   modalWindow.addEventListener('click', (e) => {
-    if ((e.target && e.target.classList.contains('modal__close')) || (e.target && e.target === modalWindow)) {
+    if ((e.target && e.target === closeBTN) || (e.target && e.target === modalWindow)) {
       addClassShow();
       document.body.style.overflow = "";
       document.body.style.marginRight = ``;
@@ -147,6 +148,7 @@ window.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('scroll', scrollListener);
   scrollListener();
   modalMR();
+
   // modal
 
   // add menu card
@@ -215,7 +217,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // add menu card
 
   // form
-  
+
   let form = document.querySelectorAll('form');
   form.forEach(item => {
     formAction(item);
@@ -233,20 +235,20 @@ window.addEventListener('DOMContentLoaded', () => {
       });
 
       fetch('./server.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(object)
-      }).then((data) => data.text)
-      .then((data) => {
-        console.log(data);
-        createMassageBlock(form, massage.successfully);
-      }).catch(() => {
-        createMassageBlock(form, massage.fail);
-      }).finally(() => {
-        form.reset();
-      });
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(object)
+        }).then((data) => data.text)
+        .then((data) => {
+          console.log(data);
+          createMassageBlock(form, massage.successfully);
+        }).catch(() => {
+          createMassageBlock(form, massage.fail);
+        }).finally(() => {
+          form.reset();
+        });
     });
   }
   let massage = {
@@ -272,7 +274,70 @@ window.addEventListener('DOMContentLoaded', () => {
     }, 5000);
   }
 
+
+  fetch('http://localhost:3000/menu')
+    .then(data => data.json())
+    .then(res => console.log(res));
+
   // form
+
+
+  //slider
+  let sliderItem = document.querySelectorAll('.offer__slide');
+  let curentSlider = 1;
+  let totalSliderQuantyty = document.querySelector('#total');
+  let curentSliderQuantyty = document.querySelector('#current');
+  let sliderBtn = document.querySelector('.offer__slider-counter');
+
+console.log(sliderItem.length);
+
+  function showSliderItem(i = 1) {
+    sliderItem.forEach((item) => {
+      item.style.display = 'none';
+    });
+    sliderItem[i - 1].style.display = 'block';
+  }
+
+  function insertTotalSliderQuantyty(b) {
+    if (b < 10) {
+      totalSliderQuantyty.textContent = `0${b}`;
+    } else {
+      totalSliderQuantyty.textContent = `${b}`;
+    }
+  }
+
+  function insertCurentSliderQuantyty(b = 1) {
+    if (b < 10) {
+      curentSliderQuantyty.textContent = `0${b}`;
+    } else {
+      curentSliderQuantyty.textContent = `${b}`;
+    }
+  }
+
+  sliderBtn.addEventListener('click', (e) => {
+    if (e.target && e.target.classList.contains('offer__slider-prev')) {
+      if (curentSlider === 1) {
+        curentSlider = sliderItem.length;
+      } else {
+        --curentSlider;
+      }
+    }
+    if (e.target && e.target.classList.contains('offer__slider-next')) {
+      if (curentSlider === sliderItem.length) {
+        curentSlider = 1;
+      } else {
+        ++curentSlider;
+      }
+    }
+    showSliderItem(curentSlider);
+    insertCurentSliderQuantyty(curentSlider);
+  });
+
+  showSliderItem();
+  insertCurentSliderQuantyty();
+  insertTotalSliderQuantyty(sliderItem.length);
+
+  //slider
 
   //_____________________________________________________
 });
