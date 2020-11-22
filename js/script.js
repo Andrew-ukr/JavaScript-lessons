@@ -510,8 +510,9 @@ window.addEventListener('DOMContentLoaded', () => {
   getData(antroItem);
   getResult();
 
-
   // Calc
+
+
 
   //_____________________________________________________
 });
