@@ -289,8 +289,6 @@ window.addEventListener('DOMContentLoaded', () => {
   let curentSliderQuantyty = document.querySelector('#current');
   let sliderBtn = document.querySelector('.offer__slider-counter');
 
-console.log(sliderItem.length);
-
   function showSliderItem(i = 1) {
     sliderItem.forEach((item) => {
       item.style.display = 'none';
@@ -338,6 +336,182 @@ console.log(sliderItem.length);
   insertTotalSliderQuantyty(sliderItem.length);
 
   //slider
+
+
+  // Calc
+  let sex = 'female';
+  let high;
+  let weight;
+  let age;
+  let actionRatio = 1.375;
+  let result;
+  let genderItem = document.querySelectorAll('#gender .calculating__choose-item');
+  let actitvityItem = document.querySelectorAll('.calculating__choose_big .calculating__choose-item');
+  let antroItem = document.querySelectorAll('.calculating__choose_medium .calculating__choose-item');
+  let resulrArea = document.querySelector('.calculating__result span');
+
+  if (localStorage.getItem('sex')) {
+    sex = localStorage.getItem('sex');
+    removeActiveClass(genderItem, 'calculating__choose-item_active');
+    genderItem.forEach(element => {
+      if (element.getAttribute('data-atr') === sex) {
+        element.classList.add('calculating__choose-item_active');
+      }
+    });
+  }
+  if (localStorage.getItem('activity')) {
+    actionRatio = localStorage.getItem('activity');
+    removeActiveClass(actitvityItem, 'calculating__choose-item_active');
+    actitvityItem.forEach(element => {
+      if (element.getAttribute('data-atr') === actionRatio) {
+        element.classList.add('calculating__choose-item_active');
+      }
+    });
+  }
+
+  if (localStorage.getItem('height')) {
+    high = localStorage.getItem('height');
+    antroItem.forEach(element => {
+      if (element.getAttribute('id') === 'height') {
+        element.value = localStorage.getItem('height');
+      }
+    });
+  }
+
+  if (localStorage.getItem('weight')) {
+    weight = localStorage.getItem('weight');
+    antroItem.forEach(element => {
+      if (element.getAttribute('id') === 'weight') {
+        element.value = localStorage.getItem('weight');
+      }
+    });
+  }
+
+  if (localStorage.getItem('age')) {
+    age = localStorage.getItem('age');
+    antroItem.forEach(element => {
+      if (element.getAttribute('id') === 'age') {
+        element.value = localStorage.getItem('age');
+      }
+    });
+  }
+
+  console.log(high, weight, age);
+
+  function getData(area, addclass) {
+    area.forEach(element => {
+      element.addEventListener('click', () => {
+        switch (element.getAttribute('id')) {
+          case 'female':
+            sex = 'female';
+            removeActiveClass(area, addclass);
+            element.classList.add(addclass);
+            localStorage.setItem('sex', sex);
+            console.log(sex);
+            break;
+
+          case 'male':
+            sex = 'male';
+            removeActiveClass(area, addclass);
+            element.classList.add(addclass);
+            localStorage.setItem('sex', sex);
+            console.log(sex);
+            break;
+
+          case 'low':
+            actionRatio = 1.2;
+            removeActiveClass(area, addclass);
+            element.classList.add(addclass);
+            localStorage.setItem('activity', actionRatio);
+            console.log(actionRatio);
+            break;
+
+          case 'small':
+            actionRatio = 1.375;
+            removeActiveClass(area, addclass);
+            element.classList.add(addclass);
+            localStorage.setItem('activity', actionRatio);
+            console.log(actionRatio);
+            break;
+
+          case 'medium':
+            actionRatio = 1.55;
+            removeActiveClass(area, addclass);
+            element.classList.add(addclass);
+            localStorage.setItem('activity', actionRatio);
+            console.log(actionRatio);
+            break;
+
+          case 'high':
+            actionRatio = 1.725;
+            removeActiveClass(area, addclass);
+            element.classList.add(addclass);
+            localStorage.setItem('activity', actionRatio);
+            console.log(actionRatio);
+            break;
+        }
+        getResult();
+        console.log(sex, high, weight, age, actionRatio, result);
+      });
+
+      element.addEventListener('change', () => {
+        if (element.value.match(/\D/g)) {
+          element.style.border = '3px solid red';
+        } else {
+          element.style.border = 'none';
+        }
+
+        switch (element.getAttribute('id')) {
+          case 'height':
+            high = +element.value;
+            console.log(high);
+            localStorage.setItem('height', high);
+            break;
+
+          case 'weight':
+            weight = +element.value;
+            console.log(weight);
+            localStorage.setItem('weight', weight);
+            break;
+
+          case 'age':
+            age = +element.value;
+            console.log(age);
+            localStorage.setItem('age', age);
+            break;
+        }
+        getResult();
+      });
+    });
+  }
+
+  function removeActiveClass(area, addclass) {
+    area.forEach(element => {
+      element.classList.remove(addclass);
+    });
+  }
+
+  function getResult() {
+    if (!sex || !high || !weight || !age || !actionRatio) {
+      result = `---`;
+      resulrArea.textContent = `${(result)}`;
+    } else {
+      if (sex === 'female') {
+        result = (447.6 + (9.2 * weight) + (3.1 * high) - (4.3 * age)) * actionRatio;
+      } else if (sex === 'male') {
+        result = (88.36 + (13.4 * weight) + (4.8 * high) - (5.7 * age)) * actionRatio;
+      }
+      resulrArea.textContent = `${Math.floor(result)}`;
+    }
+  }
+
+  getData(genderItem, 'calculating__choose-item_active');
+  getData(actitvityItem, 'calculating__choose-item_active');
+  getData(antroItem);
+  getResult();
+
+
+  // Calc
 
   //_____________________________________________________
 });
